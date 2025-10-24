@@ -21,6 +21,9 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+
+
+
 # Security
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 SECRET_KEY = os.environ.get('JWT_SECRET', 'vperfumes-secret-key-2025')
@@ -32,6 +35,21 @@ app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
 # ============= Models =============
+
+
+CORS(app, resources={r"/api/*": {"origins": "https://68fc064dd4cc72ef5f1a2a51--danapro.netlify.app/.netlify.app"}})
+
+@app.route('/api/data')
+def get_data():
+    return jsonify({'message': 'Hello from the backend!'})
+
+
+    if __name__ == '__main__':
+            # Get the port number from the environment variable set by Render
+            port = int(os.environ.get('PORT', 5000))
+            # Run the app, listening on all available network interfaces
+            app.run(host='0.0.0.0', port=port)
+
 
 class User(BaseModel):
     model_config = ConfigDict(extra="ignore")
