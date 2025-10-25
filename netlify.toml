@@ -5,7 +5,7 @@ base = "frontend"
 # The command to build the site
 command = "npm run build"
 # The folder that gets published
-publish = "frontend/build"
+publish = "/build"
 
 # The redirect rule that fixes the "Not Found" error
 [[redirects]]
