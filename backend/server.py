@@ -16,33 +16,33 @@ import jwt
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
+# MongoDB
+mongo_url = os.environ["MONGO_URL"]
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = client[os.environ["DB_NAME"]]
 
-
-
-
-# Security
+# JWT + Security
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-SECRET_KEY = os.environ.get('JWT_SECRET', 'vperfumes-secret-key-2025')
+SECRET_KEY = os.environ.get("JWT_SECRET", "vperfumes-secret-key-2025")
 ALGORITHM = "HS256"
 security = HTTPBearer()
 
-# Create the main app
+# FastAPI App
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
-# ============= Models =============
+# CORS (one clean version)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=os.environ.get("CORS_ORIGINS", "*").split(","),
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-
-CORS(app, resources={r"/api/*": {"origins": "https://68fc064dd4cc72ef5f1a2a51--danapro.netlify.app/.netlify.app"}})
-
-@app.route('/api/data')
-def get_data():
-    return jsonify({'message': 'Hello from the backend!'})
-
+@app.get("/api/data")
+async def get_data():
+    return {"message": "Hello from the backend!"}
 
     if __name__ == '__main__':
             # Get the port number from the environment variable set by Render
