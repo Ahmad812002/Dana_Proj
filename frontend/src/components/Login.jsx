@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
 
-const BACKEND_URL = "https://web-production-66ca0.up.railway.app/";
+const BACKEND_URL = "https://web-production-66ca0.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 
 export default function Login({ onLogin }) {
